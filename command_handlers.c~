@@ -290,15 +290,14 @@ void handle_memory(command_params *params) {
     char* cmd;
     cmd = get_param_string(params, 0);
     int val = 0;
-    sendf(U2, "handling memory\r\n");
+    sendf(U2, "handling memory\n");
     if (strcmp(cmd, "write") == 0) {
       next_read = 0xA;
-      val = *get_param_string(params, 1);
+      val = get_param_string(params, 1);
       mem_write(val);
     } else if (strcmp(cmd, "read") == 0) {
       next_read = next_free - 1;
-      sendf(U2, "Val previous:%d\r\n", val);
       val = ((int) mem_read());
-      sendf(U2, "Val read:%d\r\n", val);
+      sendf(U2, "Val read:" + val);
     }
 }

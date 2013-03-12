@@ -22,14 +22,14 @@ void mem_write(int val) {
   int i = 0;
   //SEND val
   SPI1STATbits.SPIEN = 1;
-  sendf(U2, "next_free = %x \r\n", next_free);
+  sendf(U2, "next_free = %x\r\n", next_free);
   SPI1BUF = 0x02;
   while((SPI1STATbits.SPITBF) && timeout_ct < 1000)
     timeout_ct++; //wait while busy
 
   //send address bytes MSB first
   for(i = 2; i > 0; i--) { 
-    SPI1BUF = (next_free >> i * 8) & 0xFF;
+    SPI1BUF = (next_free > i * 8) & 0xFF;
     timeout_ct = 0;
     while((SPI1STATbits.SPITBF) && timeout_ct < 1000)
       timeout_ct++; //wait while busy
@@ -66,10 +66,10 @@ long mem_read() {
   SPI1BUF = 0x02;
   while((SPI1STATbits.SPITBF) && timeout_ct < 1000)
     timeout_ct++; //wait while busy
-  sendf(U2, "next_read = %x \r\n", next_read);
+  sendf(U2, "next_read = %x\r\n", next_read);
   //send address bytes MSB first
   for(i = 2; i > 0; i--) { 
-    SPI1BUF = (next_read >> i * 8) & 0xFF;
+    SPI1BUF = (next_read > i * 8) & 0xFF;
     timeout_ct = 0;
     while((SPI1STATbits.SPITBF) && timeout_ct < 1000)
       timeout_ct++; //wait while busy
