@@ -66,7 +66,7 @@ long mem_read() {
   SPI1BUF = 0x02;
   while((SPI1STATbits.SPITBF) && timeout_ct < 1000)
     timeout_ct++; //wait while busy
-
+  sendf(U2, "next_read = %h", next_read);
   //send address bytes MSB first
   for(i = 2; i > 0; i--) { 
     SPI1BUF = (next_read > i * 8) & 0xFF;
