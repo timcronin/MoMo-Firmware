@@ -4,9 +4,9 @@
 #include "rtcc.h"
 
 //Buffer to read SPI to
-static unsigned char TX_BUF[140];
-static unsigned long next_free;
-static unsigned long next_read;
+//static unsigned char TX_BUF[140];
+//static unsigned long next_free;
+//static unsigned long next_read;
 
 //configure SPI
 void configure_SPI() {
@@ -15,14 +15,14 @@ void configure_SPI() {
 }
 
 //Write a value to EEPROM
-void mem_write(int val) {
+void mem_write(int addr, int val) {
   //Write to
   //Send WREN
   int timeout_ct = 0;
   int i = 0;
   //SEND val
   SPI1STATbits.SPIEN = 1;
-  sendf(U2, "next_free = %x \r\n", next_free);
+  sendf(U2, "next_free = %d \r\n", next_free);
   SPI1BUF = 0x02;
   while((SPI1STATbits.SPITBF) && timeout_ct < 1000)
     timeout_ct++; //wait while busy
@@ -54,7 +54,7 @@ void mem_write(int val) {
   next_free++;
 }
 
-long mem_read() {
+long mem_read(int addr) {
   //Write to
   //Send WREN
   int timeout_ct;
@@ -66,7 +66,7 @@ long mem_read() {
   SPI1BUF = 0x02;
   while((SPI1STATbits.SPITBF) && timeout_ct < 1000)
     timeout_ct++; //wait while busy
-  sendf(U2, "next_read = %x \r\n", next_read);
+  sendf(U2, "next_read = %d \r\n", next_read);
   //send address bytes MSB first
   for(i = 2; i > 0; i--) { 
     SPI1BUF = (next_read >> i * 8) & 0xFF;

@@ -292,13 +292,14 @@ void handle_memory(command_params *params) {
     int val = 0;
     sendf(U2, "handling memory\r\n");
     if (strcmp(cmd, "write") == 0) {
-      next_read = 0xA;
+      next_free = 0xA;
+      sendf(U2, "next_free = %x \r\n", next_free);
       val = *get_param_string(params, 1);
-      mem_write(val);
+      mem_write(0xA, val);
     } else if (strcmp(cmd, "read") == 0) {
       next_read = next_free - 1;
       sendf(U2, "Val previous:%d\r\n", val);
-      val = ((int) mem_read());
+      val = ((int) mem_read(0xA));
       sendf(U2, "Val read:%d\r\n", val);
     }
 }
