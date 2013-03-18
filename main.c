@@ -86,6 +86,7 @@ int main(void) {
 
     configure_interrupts();
     configure_SPI();
+    configure_sensor();
     //configure_rtcc();
     //enable_rtcc();
     //set_recurring_task(EverySecond, blink_light);

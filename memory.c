@@ -12,10 +12,11 @@ static unsigned long next_read;
 void configure_SPI() {
   SPI1CON1bits.MODE16 = 0; //communication is byte-wide
   SPI1CON1bits.MSTEN = 1; //SPI is in master mode
-  TRISBbits.B15 = 0;
+  /*  TRISBbits.B15 = 0;
   TRISBbits.B14 = 1; //SDI is input
   TRISBbits.B13 = 0;
-  TRISBbits.B12 = 0;
+  TRISBbits.B12 = 0; */
+  _TRISB15 = 0;
 }
 
 //Write a value to EEPROM
@@ -24,16 +25,21 @@ void mem_write(int addr, int val) {
   //Send WREN
   int timeout_ct = 0;
   int i = 0;
+  int k = 0;
   //SEND val
   SPI1STATbits.SPIEN = 1;
-  sendf(U2, "next_free = %d \r\n", next_free);
+  sendf(U2, "addr = %d \r\n", addr);
   SPI1BUF = 0x02;
-  while((SPI1STATbits.SPITBF) && timeout_ct < 1000)
+  _LATB15 = 0; //pull SS low
+  SPI1BUF = 0x02;
+  while((!_SPI1IF) && timeout_ct < 1000)
     timeout_ct++; //wait while busy
-
+  while(k++ < 200); //delay
+  _LATB15 = 1; //toggle SS high
+  _LATB15 = 0;
   //send address bytes MSB first
   for(i = 2; i > 0; i--) { 
-    SPI1BUF = (next_free >> i * 8) & 0xFF;
+    SPI1BUF = (addr >> i * 8) & 0xFF;
     timeout_ct = 0;
     while((SPI1STATbits.SPITBF) && timeout_ct < 1000)
       timeout_ct++; //wait while busy

@@ -4,7 +4,7 @@
 //#include "utilities.h"
 #include "sensor.h"
 #include "memory.h"
-static unsigned long next_free; 
+static unsigned long next_free = 0xA; 
 static unsigned long next_read;
 
 int gsm_at_cmd( const char* cmd )
@@ -279,11 +279,10 @@ void handle_rtcc(command_params *params)
 }
 
 void handle_sensor(command_params *params) {
-  IEC1bits.INT2IE = 1; //enable interrupt
-  sends(U2, "Good night, Sweet Prince");
-  Sleep();
-  sends(U2, "I can't do that Dave");
-  IEC1bits.INT2IE = 0; //disable interrupt
+  sendf(U2, "dc pulse_count = %d (Should be 0)", pulse_counts);
+  sample_sensor();
+  sendf(U2, "dc pulse_count = %d (Should be > 0)", pulse_counts);
+
 }
 
 void handle_memory(command_params *params) {
