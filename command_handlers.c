@@ -4,8 +4,6 @@
 //#include "utilities.h"
 #include "sensor.h"
 #include "memory.h"
-static unsigned long next_free = 0xA; 
-static unsigned long next_read;
 
 int gsm_at_cmd( const char* cmd )
 {

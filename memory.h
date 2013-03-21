@@ -7,6 +7,6 @@
 void mem_write(int addr, int val);
 long mem_read(int addr);
 void configure_SPI();
-static unsigned char TX_BUF[140];
-static unsigned long next_free;
-static unsigned long next_read;
+extern volatile unsigned char TX_BUF[140];
+extern volatile unsigned long next_free;
+extern volatile unsigned long next_read;

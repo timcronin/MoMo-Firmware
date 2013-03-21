@@ -12,6 +12,7 @@
 #include "serial.h"
 #include "xc.h"
 #include "memory.h"
+#include "sensor.h"
 // FBS
 #pragma config BWRP = OFF               // Table Write Protect Boot (Boot segment may be written)
 #pragma config BSS = OFF                // Boot segment Protect (No boot program Flash segment)
@@ -53,8 +54,6 @@
 #pragma config RTCOSC = LPRC            // RTCC Reference Clock Select bit (RTCC uses LPRC as reference clock)
 #pragma config DSBOREN = ON             // Deep Sleep Zero-Power BOR Enable bit (Deep Sleep BOR enabled in Deep Sleep)
 #pragma config DSWDTEN = OFF            // Deep Sleep Watchdog Timer Enable bit (DSWDT disabled)
-
-static unsigned char SENSOR_BUF[5];
 
 void blink_light()
 {
@@ -113,7 +112,10 @@ int main(void) {
     while(1)
     {
         //Do periodic tasks
-        process_commands_task();
+      sendf(U2, "dc pulse_count = %d (Should be 0)", pulse_counts);
+      sample_sensor();
+      sendf(U2, "dc pulse_count = %d (Should be > 0)", pulse_counts);
+      //        process_commands_task();
     }
 
     return (EXIT_SUCCESS);

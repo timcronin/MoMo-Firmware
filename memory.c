@@ -5,13 +5,15 @@
 
 //Buffer to read SPI to
 //static unsigned char TX_BUF[140];
-static unsigned long next_free;
-static unsigned long next_read;
+volatile unsigned long next_free;
+volatile unsigned long next_read;
+static char SPI1_FLAG;
 
 //configure SPI
 void configure_SPI() {
   SPI1CON1bits.MODE16 = 0; //communication is byte-wide
   SPI1CON1bits.MSTEN = 1; //SPI is in master mode
+  _SPI1IE = 1; //enable SPI interrupts
   /*  TRISBbits.B15 = 0;
   TRISBbits.B14 = 1; //SDI is input
   TRISBbits.B13 = 0;
@@ -19,6 +21,11 @@ void configure_SPI() {
   _TRISB15 = 0;
 }
 
+void __attribute__((interrupt,no_auto_psv)) _SPI1Interrupt() {
+  _SPI1IF = 0;
+  SPI1_FLAG = 1;
+
+}
 //Write a value to EEPROM
 void mem_write(int addr, int val) {
   //Write to
