@@ -41,12 +41,14 @@ void __attribute__((interrupt,no_auto_psv)) _T3Interrupt() {
 //sample sensor: increment when there's an interrupt
 void sample_sensor() {
   int i;
+  _INT2IE = 1; //Set INT2 to enable
   i = 0;
   pulse_counts = 0;
   PR3 = 0x989;
   PR2 = 0x6800; //reset timer
   SENSOR_TIMER_ON = 1; 
 //  sends(U2, "dc Timer On\r\n");
+  //dc
   while(!SENSOR_TIMEOUT_FLAG) { 
     if (i % 10 == 0) {
       i = 0;
@@ -57,15 +59,16 @@ void sample_sensor() {
       pulse_counts++;
       } */
   }
+  //dc
  // sends(U2, "dc Timer On\r\n");
   SENSOR_TIMEOUT_FLAG = 0; 
   SENSOR_TIMER_ON = 0;
+    _INT2IE = 0; //Set INT2 to enable
   
 }
 
 void configure_sensor() {
     _INT2EP = 1; //set INT2 for negedge detect
-    _INT2IE = 1; //Set INT2 to enable
     _T2IE = 1; //enable Timer 2 interrupts
     _T3IE = 1; //enable Timer 3 interrupts
     T2CONbits.TCKPS = 0;

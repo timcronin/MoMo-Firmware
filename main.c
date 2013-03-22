@@ -108,7 +108,8 @@ int main(void) {
     //Extend the welcome mat
     sends( U2, "Device reset complete.\r\n");
     sends( U2, "PIC 24f16ka101> ");
-
+    main_loop();
+    /*
     while(1)
     {
         //Do periodic tasks
@@ -117,12 +118,12 @@ int main(void) {
       sendf(U2, "dc pulse_count = %d (Should be > 0)", pulse_counts);
       //        process_commands_task();
     }
-
+    */
     return (EXIT_SUCCESS);
 }
 
 void main_loop() {
-    enum { SLEEP_MODE, CHECK_INT, SENSING, MEMORY_WRITE, MEMORY_READ, GSM } state;
+    enum { SLEEP_MODE, CHECK_INT, SENSING, MEMORY_WRITE, MEMORY_READ, GSM } state = SLEEP_MODE;
     unsigned long pulse_count = 0;
     while(1) {
       switch(state) {
@@ -131,12 +132,12 @@ void main_loop() {
 	state = CHECK_INT;
 	break;
       case CHECK_INT: //check which interrupt woke it up
-	if(IFS1bits.INT2IF) {
+	if(_INT2IF) {
 	  if (pulse_count == 200) //COMMENT THIS SHIT OUT
 	    pulse_count = 0;
 	  pulse_count++;
 	  state = SENSING; //if sensor interrupt, sample sensor
-	  IFS1bits.INT2IF = 0; //clear interrupt bit
+	  _INT2IF = 0; //clear interrupt bit
 	}
 	else if (IFS3bits.RTCIF) {
 	  state = GSM; //if RTC interrupt transmit GSM
