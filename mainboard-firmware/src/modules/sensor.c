@@ -8,8 +8,9 @@
 
 volatile unsigned char SENSOR_FLAG;
 volatile unsigned char SENSOR_TIMEOUT_FLAG;
-volatile unsigned long pulse_counts;
-
+volatile unsigned long pulse_counts; //incrementing pulse counts
+volatile unsigned long mem_pulse_counts; //pulse counts to store to mem
+volatile rtcc_datetime mem_datetime;
 #define SENSOR_TIMER_ON T2CONbits.TON
 #define SENSOR_TO 0x09896800 //should be 5 seconds
 
@@ -19,7 +20,11 @@ volatile unsigned long pulse_counts;
 /**********************************************************************
                                MAIN FUNCTIONS
  **********************************************************************/
-
+void sensor_sample() {
+  sensor_type sens_type = momo_pulse_counter;
+  rtcc_datetime cur_datetime = mem_datetime;
+  log_sensor_event(sens_type, &mem_datetime, mem_pulse_counts);
+}
 /**********************************************************************
                              CONFIG
  **********************************************************************/
@@ -56,15 +61,15 @@ void __attribute__((interrupt,no_auto_psv)) _INT2Interrupt() {
 
 //timeout interrupt flag
 void __attribute__((interrupt,no_auto_psv)) _T3Interrupt() {
-  sensor_type sens_type = momo_pulse_counter;
-  rtcc_datetime cur_time;
-  rtcc_get_time(&cur_time);
+
+  rtcc_get_time(&mem_datetime);
+  mem_pulse_counts = pulse_counts;
   _T3IF = 0; //clear timer interrupt flag
   T2CONbits.TON = 0; //disable timer
   _T2IE = 0;
   _T3IE = 0;
 
-  log_sensor_event(sens_type, &cur_time, pulse_counts);
+  taskloop_add(&sensor_sample);
   pulse_counts = 0;
   SENSOR_TIMEOUT_FLAG = 1;
 }
