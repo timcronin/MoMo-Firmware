@@ -19,6 +19,12 @@
         <itemPath>src/core/scheduler.h</itemPath>
       </logicalFolder>
       <logicalFolder name="debug" displayName="Debug" projectFiles="true">
+        <itemPath>src/debug/command_handlers.c</itemPath>
+        <itemPath>src/debug/command_handlers.h</itemPath>
+        <itemPath>src/debug/debug.c</itemPath>
+        <itemPath>src/debug/debug.h</itemPath>
+        <itemPath>src/debug/serial_commands.c</itemPath>
+        <itemPath>src/debug/serial_commands.h</itemPath>
       </logicalFolder>
       <logicalFolder name="modules" displayName="Modules" projectFiles="true">
         <itemPath>src/modules/gsm.c</itemPath>
@@ -77,8 +83,8 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>Simulator</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.11</languageToolchainVersion>
-        <platform>3</platform>
+        <languageToolchainVersion>1.10</languageToolchainVersion>
+        <platform>2</platform>
       </toolsSet>
       <compileType>
         <linkerTool>
@@ -131,7 +137,7 @@
         <property key="oXC16gcc-sfr-warn" value="false"/>
         <property key="oXC16gcc-smar-io-lvl" value="1"/>
         <property key="oXC16gcc-smart-io-fmt" value=""/>
-        <property key="optimization-level" value="0"/>
+        <property key="optimization-level" value="1"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
         <property key="preprocessor-macros" value=""/>
@@ -201,6 +207,7 @@
         <property key="legacy-libc" value="false"/>
         <property key="oXC16glb-macros" value=""/>
         <property key="output-file-format" value="elf"/>
+        <appendMe value="-Os"/>
       </C30Global>
       <Simulator>
       </Simulator>
