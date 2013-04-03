@@ -24,6 +24,7 @@ void sensor_sample() {
   sensor_type sens_type = momo_pulse_counter;
   rtcc_datetime cur_datetime = mem_datetime;
   log_sensor_event(sens_type, &mem_datetime, mem_pulse_counts);
+  SENSOR_FLAG = 0;
 }
 /**********************************************************************
                              CONFIG

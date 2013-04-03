@@ -10,3 +10,5 @@ void configure_sensor();
 extern volatile unsigned char SENSOR_FLAG;
 extern volatile unsigned char SENSOR_TIMEOUT_FLAG;
 extern volatile unsigned long pulse_counts;
+extern volatile unsigned long mem_pulse_counts; //pulse counts to store to mem
+extern volatile rtcc_datetime mem_datetime;

@@ -349,8 +349,8 @@ void handle_rtcc(command_params *params)
 
 void handle_sensor(command_params *params) {
   asm_sleep();
-  while(!SENSOR_FLAG);
-  puts("sensor pulse counts : %d", mem_pulse_counts);
+  while(SENSOR_FLAG);
+  sendf(U2, "sensor pulse counts : %d", mem_pulse_counts);
 }
 
 static BYTE memory_buffer[32];
