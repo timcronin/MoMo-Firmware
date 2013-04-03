@@ -12,7 +12,7 @@ volatile unsigned long pulse_counts; //incrementing pulse counts
 volatile unsigned long mem_pulse_counts; //pulse counts to store to mem
 volatile rtcc_datetime mem_datetime;
 #define SENSOR_TIMER_ON T2CONbits.TON
-#define SENSOR_TO 0x09896800 //should be 5 seconds
+#define SENSOR_TO 0x05006800 //should be 5 seconds
 
 //static unsigned char SENSOR_BUF[5];
 
