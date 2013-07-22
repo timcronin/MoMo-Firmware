@@ -6575,14 +6575,14 @@ Source: http://www.maxim-ic.com .. MAX1551-MAX1555.pdf</description>
 <part name="P+3" library="supply1" deviceset="+5V" device=""/>
 <part name="IC1" library="maxim" deviceset="MAX1555" device=""/>
 <part name="GND6" library="supply1" deviceset="GND" device=""/>
-<part name="C4" library="rcl" deviceset="C-US" device="C0805" value="1 uF"/>
-<part name="C7" library="rcl" deviceset="C-US" device="C0805" value="1 uF"/>
 <part name="U$1" library="components" deviceset="MOMO-EDGE-POWER-M" device=""/>
 <part name="U$2" library="components" deviceset="MOMO-EDGE-POWER-M" device=""/>
 <part name="GND16" library="supply1" deviceset="GND" device=""/>
 <part name="P+4" library="supply1" deviceset="+5V" device=""/>
 <part name="P+5" library="supply1" deviceset="+5V" device=""/>
 <part name="P+6" library="supply1" deviceset="+5V" device=""/>
+<part name="C7" library="rcl" deviceset="C-US" device="C0402" value="1uF"/>
+<part name="C4" library="rcl" deviceset="C-US" device="C0402" value="1uF"/>
 </parts>
 <sheets>
 <sheet>
@@ -6660,14 +6660,14 @@ Source: http://www.maxim-ic.com .. MAX1551-MAX1555.pdf</description>
 <instance part="P+3" gate="1" x="33.02" y="96.52"/>
 <instance part="IC1" gate="G$1" x="55.88" y="78.74"/>
 <instance part="GND6" gate="1" x="68.58" y="66.04"/>
-<instance part="C4" gate="G$1" x="33.02" y="78.74"/>
-<instance part="C7" gate="G$1" x="73.66" y="81.28"/>
 <instance part="U$1" gate="G$1" x="-63.5" y="68.58"/>
 <instance part="U$2" gate="G$1" x="91.44" y="91.44" rot="R90"/>
 <instance part="GND16" gate="1" x="91.44" y="86.36"/>
 <instance part="P+4" gate="1" x="15.24" y="53.34"/>
 <instance part="P+5" gate="1" x="48.26" y="27.94"/>
 <instance part="P+6" gate="1" x="30.48" y="2.54"/>
+<instance part="C7" gate="G$1" x="73.66" y="81.28"/>
+<instance part="C4" gate="G$1" x="33.02" y="78.74"/>
 </instances>
 <busses>
 <bus name="PICBUS:CLK,DAT,IRQ,MCLR">
@@ -6708,11 +6708,11 @@ Source: http://www.maxim-ic.com .. MAX1551-MAX1555.pdf</description>
 <segment>
 <pinref part="R4" gate="G$1" pin="1"/>
 <pinref part="GND7" gate="1" pin="GND"/>
-<pinref part="C4" gate="G$1" pin="2"/>
 <wire x1="33.02" y1="73.66" x2="33.02" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="33.02" y1="63.5" x2="25.4" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="25.4" y1="63.5" x2="25.4" y2="68.58" width="0.1524" layer="91"/>
 <junction x="25.4" y="63.5"/>
+<pinref part="C4" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="JP1" gate="A" pin="4"/>
@@ -6755,10 +6755,10 @@ Source: http://www.maxim-ic.com .. MAX1551-MAX1555.pdf</description>
 <pinref part="GND6" gate="1" pin="GND"/>
 <wire x1="68.58" y1="68.58" x2="68.58" y2="73.66" width="0.1524" layer="91"/>
 <wire x1="68.58" y1="73.66" x2="66.04" y2="73.66" width="0.1524" layer="91"/>
-<pinref part="C7" gate="G$1" pin="2"/>
 <wire x1="73.66" y1="76.2" x2="73.66" y2="73.66" width="0.1524" layer="91"/>
 <wire x1="73.66" y1="73.66" x2="68.58" y2="73.66" width="0.1524" layer="91"/>
 <junction x="68.58" y="73.66"/>
+<pinref part="C7" gate="G$1" pin="2"/>
 </segment>
 <segment>
 <pinref part="U$2" gate="G$1" pin="GND"/>
